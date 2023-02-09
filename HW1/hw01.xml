@@ -1,0 +1,31 @@
+<project name="HW01 Car" basedir="." default="run">
+    <property environment="env"/>
+
+    <property name="src" location="src"/>
+    <property name="bin" location="bin"/>
+
+    <path id="classpath">
+        <pathelement location="bin"/>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${bin}"/>
+    </target>
+
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${bin}" includeAntRuntime="no">
+            <classpath refid="classpath"/>
+            <include name="**/*.java"/>
+        </javac>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="hw01.Car" classpathref="classpath" fork="true"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${bin}"/>
+    </target>
+
+</project>
