@@ -8,31 +8,42 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class FileSystem {
     private static FileSystem instance;
-    private static final Lock lock = new ReentrantLock();
+    private static final Lock instanceLock = new ReentrantLock();
     private List<Directory> rootDirs;
+    private static final Lock rootDirsLock = new ReentrantLock();
 
     private FileSystem() {
         rootDirs = new ArrayList<>();
     }
 
     public static FileSystem getInstance() {
-        lock.lock();
+        instanceLock.lock();
         try {
             if (instance == null) {
                 instance = new FileSystem();
             }
             return instance;
         } finally {
-            lock.unlock();
+            instanceLock.unlock();
         }
     }
 
     public void appendRootDir(Directory root) {
-        rootDirs.add(root);
+        rootDirsLock.lock();
+        try {
+            rootDirs.add(root);
+        } finally {
+            rootDirsLock.unlock();
+        }
     }
 
     public List<Directory> getRootDirs() {
-        return rootDirs;
+        rootDirsLock.lock();
+        try {
+            return new ArrayList<>(rootDirs);
+        } finally {
+            rootDirsLock.unlock();
+        }
     }
 
     public static void main(String[] args) {
