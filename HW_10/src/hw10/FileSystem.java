@@ -76,28 +76,131 @@ public class FileSystem {
         pictures.appendChild(a);
         pictures.appendChild(b);
 
-        Runnable runnable = new Runnable() {
+        Runnable runnable1 = new Runnable() {
             @Override
             public void run() {
                 FileSystem fileSystem = FileSystem.getInstance();
                 fileSystem.appendRootDir(root);
-                System.out.println("Thread ID: " + Thread.currentThread().threadId()  + ", Root Directories: " + fileSystem.getRootDirs());
+                System.out.println("Thread 1: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+        
+        Runnable runnable2 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 2: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+        Runnable runnable3 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 1: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+        
+        Runnable runnable4 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 2: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+        Runnable runnable5 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 1: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+        
+        Runnable runnable6 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 2: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+        Runnable runnable7 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 1: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+        
+        Runnable runnable8 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 2: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+        Runnable runnable9 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 1: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+        
+        Runnable runnable10 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 2: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+        Runnable runnable11 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 1: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+        
+        Runnable runnable12 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 2: Root Directories: " + fileSystem.getRootDirs());
             }
         };
 
-        Thread thread1 = new Thread(runnable);
-        Thread thread2 = new Thread(runnable);
-        Thread thread3 = new Thread(runnable);
-        Thread thread4 = new Thread(runnable);
-        Thread thread5 = new Thread(runnable);
-        Thread thread6 = new Thread(runnable);
-        Thread thread7 = new Thread(runnable);
-        Thread thread8 = new Thread(runnable);
-        Thread thread9 = new Thread(runnable);
-        Thread thread10 = new Thread(runnable);
-        Thread thread11 = new Thread(runnable);
-        Thread thread12 = new Thread(runnable);
-        Thread thread13 = new Thread(runnable);
+        Runnable runnable13 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 2: Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+
+        Thread thread1 = new Thread(runnable1);
+        Thread thread2 = new Thread(runnable2);
+        Thread thread3 = new Thread(runnable3);
+        Thread thread4 = new Thread(runnable4);
+        Thread thread5 = new Thread(runnable5);
+        Thread thread6 = new Thread(runnable6);
+        Thread thread7 = new Thread(runnable7);
+        Thread thread8 = new Thread(runnable8);
+        Thread thread9 = new Thread(runnable9);
+        Thread thread10 = new Thread(runnable10);
+        Thread thread11 = new Thread(runnable11);
+        Thread thread12 = new Thread(runnable12);
+        Thread thread13 = new Thread(runnable13);
 
         thread1.start();
         thread2.start();
