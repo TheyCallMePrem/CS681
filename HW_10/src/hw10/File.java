@@ -2,11 +2,9 @@ package hw10;
 
 
 import java.time.LocalDateTime;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class File extends FSElement {
-    private Lock lock;
 
     public File(Directory parent, String name, int size, LocalDateTime creationTime) {
         super(parent, name, size, creationTime);
