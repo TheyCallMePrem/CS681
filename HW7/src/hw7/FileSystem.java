@@ -76,18 +76,42 @@ public class FileSystem {
         pictures.appendChild(a);
         pictures.appendChild(b);
 
-        Runnable runnable = new Runnable() {
+        Runnable runnable1 = new Runnable() {
             @Override
             public void run() {
                 FileSystem fileSystem = FileSystem.getInstance();
+                Directory root = new Directory(null, "root", 0, LocalDateTime.now());
+                // create and add directories, files, and links to the root directory
                 fileSystem.appendRootDir(root);
-                System.out.println("Thread ID: " + Thread.currentThread(). threadId()  + ", Root Directories: " + fileSystem.getRootDirs());
+                System.out.println("Thread 1, Root Directories: " + fileSystem.getRootDirs());
             }
         };
 
-        Thread thread1 = new Thread(runnable);
-        Thread thread2 = new Thread(runnable);
-        Thread thread3 = new Thread(runnable);
+        Runnable runnable2 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                Directory root = new Directory(null, "root", 0, LocalDateTime.now());
+                // create and add directories, files, and links to the root directory
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 2, Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+
+        Runnable runnable3 = new Runnable() {
+            @Override
+            public void run() {
+                FileSystem fileSystem = FileSystem.getInstance();
+                Directory root = new Directory(null, "root", 0, LocalDateTime.now());
+                // create and add directories, files, and links to the root directory
+                fileSystem.appendRootDir(root);
+                System.out.println("Thread 3, Root Directories: " + fileSystem.getRootDirs());
+            }
+        };
+
+        Thread thread1 = new Thread(runnable1);
+        Thread thread2 = new Thread(runnable2);
+        Thread thread3 = new Thread(runnable3);
 
         thread1.start();
         thread2.start();
