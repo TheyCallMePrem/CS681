@@ -3,8 +3,6 @@ package hw10;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Directory extends FSElement {
     private List<FSElement> children;
@@ -12,7 +10,6 @@ public class Directory extends FSElement {
     LinkedList<Directory> DIRList = new LinkedList<Directory>();
     LinkedList<File> Filelist = new LinkedList<File>();
     LinkedList<Link> ProxyList = new LinkedList<Link>();
-    private Lock lock = new ReentrantLock();
 
     public Directory(Directory parent, String name, int size, LocalDateTime creationTime) {
         super(parent, name, size, creationTime);
