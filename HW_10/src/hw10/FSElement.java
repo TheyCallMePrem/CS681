@@ -9,7 +9,7 @@ public abstract class FSElement {
     private String name;
     private int size;
     private LocalDateTime creationTime;
-    private final Lock lock = new ReentrantLock();
+    protected Lock lock = new ReentrantLock();
 
     public FSElement(Directory parent, String name, int size, LocalDateTime creationTime) {
         this.parent = parent;
