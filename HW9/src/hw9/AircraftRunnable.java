@@ -5,7 +5,7 @@ package hw9;
 public class AircraftRunnable {
     public static void main(String[] args) {
         Aircraft aircraft = new Aircraft(new Position(0, 0, 0));
-        Runnable runnable = new Runnable() {
+        Runnable runnable1 = new Runnable() {
             @Override
             public void run() {
                 for (int i = 0; i < 10; i++) {
@@ -16,8 +16,19 @@ public class AircraftRunnable {
                 }
             }
         };
-        Thread thread1 = new Thread(runnable);
-        Thread thread2 = new Thread(runnable);
+        Runnable runnable2 = new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 10; i < 20; i++) {
+                    aircraft.setPosition(i, i, i);
+                    Position position = aircraft.getPosition();
+                    System.out.println(Thread.currentThread().getName() + ": " + position.coordinate() 
+                            + " (Immutable: " + (position.getClass().isRecord() ? "Yes" : "No") + ")");
+                }
+            }
+        };
+        Thread thread1 = new Thread(runnable1);
+        Thread thread2 = new Thread(runnable2);
         thread1.start();
         thread2.start();
     }
