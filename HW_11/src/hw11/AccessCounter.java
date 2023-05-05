@@ -6,18 +6,23 @@ import java.util.concurrent.locks.ReentrantLock;
 public class AccessCounter {
     private static AccessCounter instance = null;
     private HashMap<Path, Integer> accessCounts;
-    private ReentrantLock lock;
+    private static final ReentrantLock lock = new ReentrantLock();
 
     private AccessCounter() {
         accessCounts = new HashMap<>();
-        lock = new ReentrantLock();
     }
 
-    public static synchronized AccessCounter getInstance() {
-        if (instance == null) {
-            instance = new AccessCounter();
+    public static AccessCounter getInstance() {
+        
+        lock.lock();
+        try {
+            if (instance == null) {
+                instance = new AccessCounter();
+            }
+            return instance;
+        } finally {
+            lock.unlock();
         }
-        return instance;
     }
 
     public void increment(Path path) {
