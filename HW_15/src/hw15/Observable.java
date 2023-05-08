@@ -1,12 +1,14 @@
 package hw15;
 
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Observable<T> {
-    private final List<Observer<T>> observers = new ArrayList<>();
+    private final LinkedList<Observer<T>> observers = new LinkedList<>();
     private final Lock lockObs = new ReentrantLock();
 
     public void addObserver(Observer<T> observer) {
