@@ -39,19 +39,19 @@ public class HousePrices {
                     })
                     .collect(Collectors.toList());
 
-                    var charlesRiverBlocks = data.stream()
+                    var charlesRiverBlocks = data.parallelStream()
                     .filter(list -> list.get(3).equals(true))
                     .collect(Collectors.toList());
         
-            double highestPrice = charlesRiverBlocks.stream()
+            double highestPrice = charlesRiverBlocks.parallelStream()
                     .mapToDouble(list -> (double) list.get(13))
                     .max()
                     .orElse(Double.NaN);
-            double lowestPrice = charlesRiverBlocks.stream()
+            double lowestPrice = charlesRiverBlocks.parallelStream()
                     .mapToDouble(list -> (double) list.get(13))
                     .min()
                     .orElse(Double.NaN);
-            double averagePrice = charlesRiverBlocks.stream()
+            double averagePrice = charlesRiverBlocks.parallelStream()
                     .mapToDouble(list -> (double) list.get(13))
                     .average()
                     .orElse(Double.NaN);
@@ -62,23 +62,23 @@ public class HousePrices {
             System.out.println("Lowest price of houses next to Charles river: " + lowestPrice);
             System.out.println("Average price of houses next to Charles river: " + averagePrice);
 
-            List<List<Object>> sortedDataByCrimeRate = data.stream()
+            List<List<Object>> sortedDataByCrimeRate = data.parallelStream()
             .sorted(Comparator.comparingDouble(row -> (double) row.get(0)))
             .collect(Collectors.toList());
 
         int numLowestCrimeRateRows = (int) Math.ceil(data.size() * 0.1);
 
-        List<List<Object>> lowestCrimeRateRows = sortedDataByCrimeRate.stream()
+        List<List<Object>> lowestCrimeRateRows = sortedDataByCrimeRate.parallelStream()
             .limit(numLowestCrimeRateRows)
             .collect(Collectors.toList());
 
-        List<List<Object>> sortedDataByPupilTeacherRatio = data.stream()
+        List<List<Object>> sortedDataByPupilTeacherRatio = data.parallelStream()
             .sorted(Comparator.comparingDouble(row -> (double) row.get(10)))
             .collect(Collectors.toList());
 
         int numLowestPupilTeacherRatioRows = (int) Math.ceil(data.size() * 0.1);
 
-        List<List<Object>> lowestPupilTeacherRatioRows = sortedDataByPupilTeacherRatio.stream()
+        List<List<Object>> lowestPupilTeacherRatioRows = sortedDataByPupilTeacherRatio.parallelStream()
             .limit(numLowestPupilTeacherRatioRows)
             .collect(Collectors.toList());
 
@@ -93,29 +93,29 @@ public class HousePrices {
             System.out.println(row);
         }
 
-        List<Double> prices = data.stream()
+        List<Double> prices = data.parallelStream()
                 .map(row -> (double) row.get(13))
                 .collect(Collectors.toList());
 
-        double maxPrice = prices.stream().mapToDouble(Double::doubleValue).max().orElse(0);
-        double minPrice = prices.stream().mapToDouble(Double::doubleValue).min().orElse(0);
-        double avgPrice = prices.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
+        double maxPrice = prices.parallelStream().mapToDouble(Double::doubleValue).max().orElse(0);
+        double minPrice = prices.parallelStream().mapToDouble(Double::doubleValue).min().orElse(0);
+        double avgPrice = prices.parallelStream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
 
-        List<Double> noxConcentrations = data.stream()
+        List<Double> noxConcentrations = data.parallelStream()
                 .map(row -> (double) row.get(4))
                 .collect(Collectors.toList());
 
-        double maxNOX = noxConcentrations.stream().mapToDouble(Double::doubleValue).max().orElse(0);
-        double minNOX = noxConcentrations.stream().mapToDouble(Double::doubleValue).min().orElse(0);
-        double avgNOX = noxConcentrations.stream().mapToDouble(Double::doubleValue).average().orElse(0);
+        double maxNOX = noxConcentrations.parallelStream().mapToDouble(Double::doubleValue).max().orElse(0);
+        double minNOX = noxConcentrations.parallelStream().mapToDouble(Double::doubleValue).min().orElse(0);
+        double avgNOX = noxConcentrations.parallelStream().mapToDouble(Double::doubleValue).average().orElse(0);
 
-        List<Double> numRooms = data.stream()
+        List<Double> numRooms = data.parallelStream()
                 .map(row -> (double) row.get(5))
                 .collect(Collectors.toList());
 
-        double maxNumRooms = numRooms.stream().mapToDouble(Double::doubleValue).max().orElse(0);
-        double minNumRooms = numRooms.stream().mapToDouble(Double::doubleValue).min().orElse(0);
-        double avgNumRooms = numRooms.stream().mapToDouble(Double::doubleValue).average().orElse(0);
+        double maxNumRooms = numRooms.parallelStream().mapToDouble(Double::doubleValue).max().orElse(0);
+        double minNumRooms = numRooms.parallelStream().mapToDouble(Double::doubleValue).min().orElse(0);
+        double avgNumRooms = numRooms.parallelStream().mapToDouble(Double::doubleValue).average().orElse(0);
 
         System.out.println("\nMax, min, and average of price:");
         System.out.println("Max: " + maxPrice);
@@ -134,26 +134,26 @@ public class HousePrices {
 
 
 
-        List<Double> ages = data.stream()
+        List<Double> ages = data.parallelStream()
         .map(list -> (Double) list.get(6))
         .collect(Collectors.toList());
 
         double minAge = Collections.min(ages);
         double maxAge = Collections.max(ages);
-        double avgAge = ages.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+        double avgAge = ages.parallelStream().mapToDouble(Double::doubleValue).average().orElse(0.0);
 
         System.out.println("\nData Processing #3 : \nI have computed newest, oldest and average age among all houses in the dataset, the column used is house age (AGE)");
         System.out.println("Minimum age: " + minAge);
         System.out.println("Maximum age: " + maxAge);
         System.out.println("Average age: " + avgAge);
 
-        List<Double> pricePerRoom = data.stream()
+        List<Double> pricePerRoom = data.parallelStream()
         .map(row -> (double) row.get(13) / (double) row.get(5))
         .collect(Collectors.toList());
 
         double costliestPricePerRoom = Collections.max(pricePerRoom);
         double cheapestPricePerRoom = Collections.min(pricePerRoom);
-        double avgPricePerRoom = pricePerRoom.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
+        double avgPricePerRoom = pricePerRoom.parallelStream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
 
         System.out.println("\nData Processing #4 : \nI have computed the costliest, cheapest, and average price of houses per room. \n");
         System.out.println("Costliest price per room: " + costliestPricePerRoom);
