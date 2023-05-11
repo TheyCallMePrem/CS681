@@ -23,26 +23,26 @@ class RequestHandler implements Runnable {
 
     @Override
     public void run() {
-        long timeout = System.currentTimeMillis() + 5000;
-        while (running && System.currentTimeMillis() < timeout) {
+        while (running && !Thread.currentThread().isInterrupted()) {
             Path file = files[rand.nextInt(files.length)];
             AccessCounter ac = AccessCounter.getInstance();
             ac.increment(file);
             int count = ac.getCount(file);
-            System.out.println(Thread.currentThread().getName() + ": " + file + " accessed " + count + " times." );
+            System.out.println(Thread.currentThread().getName() + ": " + file + " accessed " + count + " times.");
             try {
                 Thread.sleep(rand.nextInt(5000) + 1000);
             } catch (InterruptedException e) {
                 System.out.println(Thread.currentThread().getName() + " interrupted");
-
                 Thread.currentThread().interrupt();
             }
         }
     }
+
+
     
-    public static void main(String[] args) throws InterruptedException{
+    public static void main(String[] args) throws InterruptedException {
         Path[] files = { Paths.get("a.html"), Paths.get("b.html"), Paths.get("c.html") };
-        
+    
         RequestHandler handler1 = new RequestHandler(files);
         RequestHandler handler2 = new RequestHandler(files);
         RequestHandler handler3 = new RequestHandler(files);
@@ -56,7 +56,7 @@ class RequestHandler implements Runnable {
         RequestHandler handler11 = new RequestHandler(files);
         RequestHandler handler12 = new RequestHandler(files);
         RequestHandler handler13 = new RequestHandler(files);
-        
+    
         Thread thread1 = new Thread(handler1);
         Thread thread2 = new Thread(handler2);
         Thread thread3 = new Thread(handler3);
@@ -70,7 +70,7 @@ class RequestHandler implements Runnable {
         Thread thread11 = new Thread(handler11);
         Thread thread12 = new Thread(handler12);
         Thread thread13 = new Thread(handler13);
-        
+    
         thread1.start();
         thread2.start();
         thread3.start();
@@ -115,23 +115,9 @@ class RequestHandler implements Runnable {
         thread12.interrupt();
         thread13.interrupt();
     
-        thread1.join();
-        thread2.join();
-        thread3.join();
-        thread4.join();
-        thread5.join();
-        thread6.join();
-        thread7.join();
-        thread8.join();
-        thread9.join();
-        thread10.join();
-        thread11.join();
-        thread12.join();
-        thread13.join();
-    
         System.out.println("All threads interrupted");
-    
     }
+    
     
 }
 
