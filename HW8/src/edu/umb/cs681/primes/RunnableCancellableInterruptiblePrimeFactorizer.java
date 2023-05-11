@@ -24,14 +24,8 @@ public class RunnableCancellableInterruptiblePrimeFactorizer extends RunnableCan
         while (dividend != 1 && divisor <= to) {
             lock.lock();
             try {
-                if (Thread.interrupted()) {
-                    System.out.println(Thread.currentThread().getName() + " interrupted.");
-                    return;
-                }
-                if (done) {
-                    System.out.println(Thread.currentThread().getName() + " cancelled.");
-                    return;
-                }
+                if (done)
+                    break;
                 if (divisor > 2 && isEven(divisor)) {
                     divisor++;
                     continue;
@@ -48,51 +42,50 @@ public class RunnableCancellableInterruptiblePrimeFactorizer extends RunnableCan
             } finally {
                 lock.unlock();
             }
+            Thread.yield();
         }
+        lock.lock();
+        try {
+            if (done) {
+                System.out.println("Thread #" + Thread.currentThread().threadId()+ " is cancelled.");
+                return;
+            }
+            if (Thread.interrupted()) {
+                try {
+                    throw new InterruptedException("Thread interrupted");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } finally {
+            lock.unlock();
+        }
+        System.out.println("Thread #" + Thread.currentThread().threadId() + " is completed.");
     }
 
     public void run() {
-        Thread currentThread = Thread.currentThread();
         generatePrimeFactors();
-        if (Thread.interrupted()) {
-            System.out.println(currentThread.getName() + " interrupted.");
-            return;
-        }
-        System.out.println(currentThread.getName() + " completed.");
     }
-
     public static void main(String[] args) {
-        RunnableCancellableInterruptiblePrimeFactorizer factorizer1 = new RunnableCancellableInterruptiblePrimeFactorizer(100, 2, 500);
-        RunnableCancellableInterruptiblePrimeFactorizer factorizer2 = new RunnableCancellableInterruptiblePrimeFactorizer(1024, 2, 500);
-        RunnableCancellableInterruptiblePrimeFactorizer factorizer3 = new RunnableCancellableInterruptiblePrimeFactorizer(93754863, 2, 500);
+        RunnableCancellableInterruptiblePrimeFactorizer factorizer1 = new RunnableCancellableInterruptiblePrimeFactorizer(36, 2, 7);
+        RunnableCancellableInterruptiblePrimeFactorizer factorizer2 = new RunnableCancellableInterruptiblePrimeFactorizer(84, 2, 10);
 
         Thread thread1 = new Thread(factorizer1);
         Thread thread2 = new Thread(factorizer2);
-        Thread thread3 = new Thread(factorizer3);
 
         thread1.start();
         thread2.start();
-        thread3.start();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000); // Wait for 5 seconds
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        factorizer3.setDone();
-        thread3.interrupt();
+        factorizer1.setDone();
+        factorizer2.setDone();
 
-        try {
-            thread1.join();
-            thread2.join();
-            thread3.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("Factorizer 1 factors: " + factorizer1.getPrimeFactors());
-        System.out.println("Factorizer 2 factors: " + factorizer2.getPrimeFactors());
-        System.out.println("Factorizer 3 factors (cancelled/interrupted): " + factorizer3.getPrimeFactors());
+        thread1.interrupt();
+        thread2.interrupt();
     }
 }
