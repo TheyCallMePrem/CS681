@@ -23,8 +23,7 @@ class RequestHandler implements Runnable {
 
     @Override
     public void run() {
-        long timeout = System.currentTimeMillis() + 5000;
-        while (running && System.currentTimeMillis() < timeout) {
+        while (running) {
             Path file = files[rand.nextInt(files.length)];
             AccessCounter ac = AccessCounter.getInstance();
             ac.increment(file);
@@ -34,9 +33,15 @@ class RequestHandler implements Runnable {
                 Thread.sleep(rand.nextInt(5000) + 1000);
             } catch (InterruptedException e) {
                 System.out.println(Thread.currentThread().getName() + " interrupted");
-
                 Thread.currentThread().interrupt();
             }
+        }
+        // Wait for the current iteration to finish before exiting
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            System.out.println(Thread.currentThread().getName() + " interrupted");
+            Thread.currentThread().interrupt();
         }
     }
     
@@ -114,20 +119,7 @@ class RequestHandler implements Runnable {
         thread11.interrupt();
         thread12.interrupt();
         thread13.interrupt();
-    
-        thread1.join();
-        thread2.join();
-        thread3.join();
-        thread4.join();
-        thread5.join();
-        thread6.join();
-        thread7.join();
-        thread8.join();
-        thread9.join();
-        thread10.join();
-        thread11.join();
-        thread12.join();
-        thread13.join();
+
     
         System.out.println("All threads interrupted");
     
