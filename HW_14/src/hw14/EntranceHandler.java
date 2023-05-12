@@ -1,6 +1,7 @@
 package hw14;
 public class EntranceHandler implements Runnable {
     private AdmissionMonitor monitor;
+    private volatile boolean running = true;
 
     public EntranceHandler(AdmissionMonitor monitor) {
         this.monitor = monitor;
@@ -8,14 +9,18 @@ public class EntranceHandler implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (running) {
             try {
                 monitor.enter();
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                break;
+                running = false;
             }
         }
+    }
+
+    public void stopRunning() {
+        running = false;
     }
 }
