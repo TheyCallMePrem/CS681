@@ -2,6 +2,7 @@ package hw14;
 
 public class StatsHandler implements Runnable {
     private AdmissionMonitor monitor;
+    private volatile boolean running = true;
 
     public StatsHandler(AdmissionMonitor monitor) {
         this.monitor = monitor;
@@ -9,7 +10,7 @@ public class StatsHandler implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (running) {
             int currentVisitors = monitor.countCurrentVisitors();
             
             System.out.println(": Current visitors: " + currentVisitors);
@@ -17,8 +18,12 @@ public class StatsHandler implements Runnable {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                break;
+                running = false;
             }
         }
+    }
+
+    public void stopRunning() {
+        running = false;
     }
 }
