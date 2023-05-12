@@ -76,8 +76,17 @@ public class ThreadSafeBankAccount2 implements BankAccount {
             for (Thread thread : threads) {
                 thread.interrupt();
             }
+            sufficientFundsCondition.signalAll();
+            belowUpperLimitFundsCondition.signalAll();
         } finally {
             lock.unlock();
+        }
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
         }
     }
 
