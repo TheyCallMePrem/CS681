@@ -111,20 +111,6 @@ class RequestHandler implements Runnable {
         thread12.interrupt();
         thread13.interrupt();
     
-        thread1.join();
-        thread2.join();
-        thread3.join();
-        thread4.join();
-        thread5.join();
-        thread6.join();
-        thread7.join();
-        thread8.join();
-        thread9.join();
-        thread10.join();
-        thread11.join();
-        thread12.join();
-        thread13.join();
-    
         System.out.println("All threads interrupted");
     
     }
