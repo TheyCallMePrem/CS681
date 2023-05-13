@@ -36,18 +36,25 @@ class RequestHandler implements Runnable {
                 Thread.currentThread().interrupt();
             }
         }
-        // Wait for the current iteration to finish before exiting
+        System.out.println(Thread.currentThread().getName() + " finishing");
+    }
+
+    public void shutdown() throws InterruptedException {
+        stop();
+        Thread.currentThread().interrupt();
+        System.out.println(Thread.currentThread().getName() + " shutting down");
         try {
-            Thread.sleep(100);
+            Thread.currentThread().join();
         } catch (InterruptedException e) {
-            System.out.println(Thread.currentThread().getName() + " interrupted");
+            System.out.println(Thread.currentThread().getName() + " interrupted while waiting for thread to finish");
             Thread.currentThread().interrupt();
         }
     }
     
+
     public static void main(String[] args) throws InterruptedException{
         Path[] files = { Paths.get("a.html"), Paths.get("b.html"), Paths.get("c.html") };
-        
+
         RequestHandler handler1 = new RequestHandler(files);
         RequestHandler handler2 = new RequestHandler(files);
         RequestHandler handler3 = new RequestHandler(files);
@@ -61,7 +68,7 @@ class RequestHandler implements Runnable {
         RequestHandler handler11 = new RequestHandler(files);
         RequestHandler handler12 = new RequestHandler(files);
         RequestHandler handler13 = new RequestHandler(files);
-        
+
         Thread thread1 = new Thread(handler1);
         Thread thread2 = new Thread(handler2);
         Thread thread3 = new Thread(handler3);
@@ -75,7 +82,7 @@ class RequestHandler implements Runnable {
         Thread thread11 = new Thread(handler11);
         Thread thread12 = new Thread(handler12);
         Thread thread13 = new Thread(handler13);
-        
+
         thread1.start();
         thread2.start();
         thread3.start();
@@ -89,40 +96,23 @@ class RequestHandler implements Runnable {
         thread11.start();
         thread12.start();
         thread13.start();
-    
-        Thread.sleep(5000); // wait for 5 seconds
-    
-        handler1.stop();
-        handler2.stop();
-        handler3.stop();
-        handler4.stop();
-        handler5.stop();
-        handler6.stop();
-        handler7.stop();
-        handler8.stop();
-        handler9.stop();
-        handler10.stop();
-        handler11.stop();
-        handler12.stop();
-        handler13.stop();
-    
-        thread1.interrupt();
-        thread2.interrupt();
-        thread3.interrupt();
-        thread4.interrupt();
-        thread5.interrupt();
-        thread6.interrupt();
-        thread7.interrupt();
-        thread8.interrupt();
-        thread9.interrupt();
-        thread10.interrupt();
-        thread11.interrupt();
-        thread12.interrupt();
-        thread13.interrupt();
 
-    
-        System.out.println("All threads interrupted");
-    
+        Thread.sleep(5000); // wait for 5 seconds
+
+        handler1.shutdown();
+        handler2.shutdown();
+        handler3.shutdown();
+        handler4.shutdown();
+        handler5.shutdown();
+        handler6.shutdown();
+        handler7.shutdown();
+        handler8.shutdown();
+        handler9.shutdown();
+        handler10.shutdown();
+        handler11.shutdown();
+        handler12.shutdown();
+        handler13.shutdown();
+
+        System.out.println("All threads shut down");
     }
-    
 }
