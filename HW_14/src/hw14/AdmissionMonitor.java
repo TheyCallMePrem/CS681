@@ -67,12 +67,6 @@ public class AdmissionMonitor {
             exitThread2.interrupt();
             statsThread.interrupt();
 
-            entranceThread1.join();
-            entranceThread2.join();
-            entranceThread3.join();
-            exitThread1.join();
-            exitThread2.join();
-            statsThread.join();
     }
 }
 
