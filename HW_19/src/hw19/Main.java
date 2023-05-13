@@ -194,20 +194,7 @@ public class Main {
         }, "thread13");
         thread13.start();
 
-        // Wait for threads to finish
-        thread1.join();
-        thread2.join();
-        thread3.join();
-        thread4.join();
-        thread5.join();
-        thread6.join();
-        thread7.join();
-        thread8.join();
-        thread9.join();
-        thread10.join();
-        thread11.join();
-        thread12.join();
-        thread13.join();
+    
     }
     }
 }
