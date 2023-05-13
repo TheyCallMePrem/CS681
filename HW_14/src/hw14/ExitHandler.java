@@ -16,12 +16,13 @@ public class ExitHandler implements Runnable {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                running = false;
+                stopRunning();
             }
         }
     }
 
     public void stopRunning() {
         running = false;
+        Thread.currentThread().interrupt();
     }
 }
