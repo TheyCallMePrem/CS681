@@ -5,20 +5,20 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Revised_Customer {
-    private Movie movie;
+    private Revised_Movie movie;
     private Lock lock = new ReentrantLock();
     private Condition movieReturned = lock.newCondition();
 
   
 
-    public void rentMovie(Movie movie) {
+    public void rentMovie(Revised_Movie movie1) {
         lock.lock();
         try {
-            while (movie.getAvailableCopies() == 0) {
+            while (movie1.getAvailableCopies() == 0) {
                 movieReturned.await();
             }
-            movie.rentMovie();
-            this.movie = movie;
+            movie1.rentMovie();
+            this.movie = movie1;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
